@@ -97,6 +97,9 @@ use App\Http\Controllers\TemplateController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('test_deploy', function () {
+    return "Testing Deployment : 16 Nov,2023";
+});
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard.dashboard');
@@ -112,7 +115,6 @@ Route::get('/check', [HomeController::class, 'check'])->middleware(
     ]
 );
 // Route::get('/password/resets/{lang?}', 'Auth\LoginController@showLinkRequestForm')->name('change.langPass');
-
 Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(['XSS']);
 
 Route::get('career/{id}/{lang}', [JobController::class, 'career'])->name('career');

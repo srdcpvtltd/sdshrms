@@ -264,7 +264,9 @@
                         </div>
                     </div>
                 </div>
-                    
+            </div>
+            <div class="row">
+                
                 <div class="col-md-6 ">
                     <div class="card em-card " style="height: 506px">
                         <div class="card-header">
@@ -283,7 +285,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div class="float-end">

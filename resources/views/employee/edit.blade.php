@@ -356,6 +356,26 @@
                     </div>
                 </div>
             @endif
+            <div class="row">
+                
+                    <div class="col-md-6 ">
+                        <div class="card em-card " style="height: 506px">
+                            <div class="card-header">
+                                <h5>{{ __('Reporting Manager') }}</h5>
+                            </div>
+                            <div class="card-body employee-detail-create-body">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        {{ Form::label('reporting_manager_id', __('Select Reporting Manager*'), ['class' => 'form-label']) }}
+                                        <div class="form-icon-user">
+                                            {{ Form::select('reporting_manager_id', $reportingManagers, $reportingManagerId, ['class' => 'form-control reporting_manager_id', 'required' => 'required', 'placeholder' => 'Select Reporting Manager', 'id' => 'reporting_manager_id']) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
 
             @if (\Auth::user()->type != 'employee')
                 <div class="float-end">

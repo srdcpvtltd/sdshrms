@@ -28,6 +28,7 @@ use App\Models\ExperienceCertificate;
 use App\Models\JoiningLetter;
 use App\Models\LoginDetail;
 use App\Models\PaySlip;
+use App\Models\ReportingManager;
 
 //use Faker\Provider\File;
 
@@ -64,10 +65,11 @@ class EmployeeController extends Controller
             $departments      = Department::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $designations     = Designation::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $employees        = User::where('created_by', \Auth::user()->creatorId())->get();
+            $reportingManagers        = User::where('created_by', \Auth::user()->creatorId())->get();
 
             $employeesId      = \Auth::user()->employeeIdFormat($this->employeeNumber());
 
-            return view('employee.create', compact('employees', 'employeesId', 'departments', 'designations', 'documents', 'branches', 'company_settings'));
+            return view('employee.create', compact('employees', 'employeesId', 'departments', 'designations', 'documents', 'branches', 'company_settings','reportingManagers'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
@@ -219,7 +221,14 @@ class EmployeeController extends Controller
 
                 return redirect()->route('employee.index')->with('success', __('Employee successfully created.') . ((!empty($resp) && $resp['is_success'] == false && !empty($resp['error'])) ? '<br> <span class="text-danger">' . $resp['error'] . '</span>' : ''));
             }
-
+            if($request->reporting_manager_id)
+            {
+                ReportingManager::create([
+                    'reporting_manager_id' => $request->reporting_manager_id,
+                    'user_id' => $employee->user_id,
+                    'reporting_user_id' => $employee->id,
+                ]);
+            }
             return redirect()->route('employee.index')->with('success', __('Employee  successfully created.'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
@@ -236,8 +245,9 @@ class EmployeeController extends Controller
             $designations = Designation::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $employee     = Employee::find($id);
             $employeesId  = \Auth::user()->employeeIdFormat($employee->employee_id);
-
-            return view('employee.edit', compact('employee', 'employeesId', 'branches', 'departments', 'designations', 'documents'));
+            $reportingManagerId = ReportingManager::where('reporting_user_id',$employee->id)->first() ? ReportingManager::where('reporting_user_id',$employee->id)->first()->reporting_manager_id : '';
+            $reportingManagers        = User::where('created_by', \Auth::user()->creatorId())->where('user_id','!=',$employee->user_id)->get();
+            return view('employee.edit', compact('employee', 'employeesId', 'branches', 'departments', 'designations', 'documents','reportingManagerId','reportingManagers'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
@@ -313,6 +323,26 @@ class EmployeeController extends Controller
             $employee = Employee::findOrFail($id);
             $input    = $request->all();
             $employee->fill($input)->save();
+            $reportingManager = ReportingManager::where('reporting_user_id',$employee->id)->first();
+            if($request->reporting_manager_id)
+            {
+                if($reportingManager)
+                {
+                    $reportingManager->update([
+                        'reporting_manager_id' => $request->reporting_manager_id,
+                    ]);
+                }else{
+                    
+                    ReportingManager::create([
+                        'reporting_manager_id' => $request->reporting_manager_id,
+                        'user_id' => $employee->user_id,
+                        'reporting_user_id' => $employee->id,
+                    ]);
+                }
+            }else{
+                if($reportingManager)
+                    $reportingManager->delete();
+            }
             if ($request->salary) {
                 return redirect()->route('setsalary.index')->with('success', 'Employee successfully updated.');
             }

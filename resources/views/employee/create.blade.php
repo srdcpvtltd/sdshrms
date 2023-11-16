@@ -275,7 +275,7 @@
                                 <div class="form-group col-md-6">
                                     {{ Form::label('reporting_manager_id', __('Select Reporting Manager*'), ['class' => 'form-label']) }}
                                     <div class="form-icon-user">
-                                        {{ Form::select('reporting_manager_id', $reportingManagers, null, ['class' => 'form-control reporting_manager_id', 'required' => 'required', 'placeholder' => 'Select Reporting Manager', 'id' => 'reporting_manager_id']) }}
+                                        {{ Form::select('reporting_manager_id', $reportingManagers, null, ['class' => 'form-control reporting_manager_id', 'placeholder' => 'Select Reporting Manager', 'id' => 'reporting_manager_id']) }}
                                     </div>
                                 </div>
                             </div>

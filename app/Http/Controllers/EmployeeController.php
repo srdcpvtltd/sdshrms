@@ -246,7 +246,7 @@ class EmployeeController extends Controller
             $employee     = Employee::find($id);
             $employeesId  = \Auth::user()->employeeIdFormat($employee->employee_id);
             $reportingManagerId = ReportingManager::where('reporting_user_id',$employee->id)->first() ? ReportingManager::where('reporting_user_id',$employee->id)->first()->reporting_manager_id : '';
-            $reportingManagers        = User::where('created_by', \Auth::user()->creatorId())->where('user_id','!=',$employee->user_id)->get()->pluck('name', 'id');
+            $reportingManagers        = User::where('created_by', \Auth::user()->creatorId())->where('id','!=',$employee->user_id)->get()->pluck('name', 'id');
             return view('employee.edit', compact('employee', 'employeesId', 'branches', 'departments', 'designations', 'documents','reportingManagerId','reportingManagers'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));

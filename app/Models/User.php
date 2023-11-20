@@ -2382,8 +2382,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public static function employeeIdFormat($number)
     {
         $settings = Utility::settings();
-
-        return $settings["employee_prefix"] . sprintf("%05d", $number);
+        $employee = Employee::where('employee_id',$number)->first();
+        if($employee)
+        {
+            return $settings["employee_prefix"] .'/'.$employee->gender.'/'. sprintf("%05d", $number);
+        }else{
+            return $settings["employee_prefix"] .'/Male/'. sprintf("%05d", $number);
+        }
     }
 
     public function getBranch($branch_id)
@@ -2670,6 +2675,13 @@ class User extends Authenticatable implements MustVerifyEmail
                 ]
             );
         }
+    }
+    public function isReportingManager()
+    {
+        $reportingManager = ReportingManager::where('reporting_manager_id',$this->id)->first();       
+        if($reportingManager)
+            return true;
+        return false;
     }
     
 }

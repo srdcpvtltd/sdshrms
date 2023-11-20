@@ -99,7 +99,6 @@ class EmployeeController extends Controller
 
                 return redirect()->back()->withInput()->with('error', $messages->first());
             }
-
             if ($request->hasFile('document')) {
                 foreach ($request->document as $key => $document) {
                     $filenameWithExt = $request->file('document')[$key]->getClientOriginalName();
@@ -204,6 +203,14 @@ class EmployeeController extends Controller
                 }
             }
 
+            if($request->reporting_manager_id)
+            {
+                ReportingManager::create([
+                    'reporting_manager_id' => $request->reporting_manager_id,
+                    'user_id' => $employee->user_id,
+                    'reporting_user_id' => $employee->id,
+                ]);
+            }
             $setings = Utility::settings();
             if ($setings['new_employee'] == 1) {
                 $department = Department::find($request['department_id']);
@@ -220,14 +227,6 @@ class EmployeeController extends Controller
                 $resp = Utility::sendEmailTemplate('new_employee', [$user->id => $user->email], $uArr);
 
                 return redirect()->route('employee.index')->with('success', __('Employee successfully created.') . ((!empty($resp) && $resp['is_success'] == false && !empty($resp['error'])) ? '<br> <span class="text-danger">' . $resp['error'] . '</span>' : ''));
-            }
-            if($request->reporting_manager_id)
-            {
-                ReportingManager::create([
-                    'reporting_manager_id' => $request->reporting_manager_id,
-                    'user_id' => $employee->user_id,
-                    'reporting_user_id' => $employee->id,
-                ]);
             }
             return redirect()->route('employee.index')->with('success', __('Employee  successfully created.'));
         } else {
@@ -837,5 +836,11 @@ class EmployeeController extends Controller
         $designations = Designation::where('department_id', $request->department_id)->get()->pluck('name', 'id')->toArray();
 
         return response()->json($designations);
+    }
+    public function getEmployeeId(Request $request)
+    {
+        $settings = Utility::settings();
+        $employeeId = $settings["employee_prefix"] .'/'.$request->gender.'/'. sprintf("%05d", $this->employeeNumber());
+        return response()->json($employeeId);
     }
 }

@@ -235,6 +235,12 @@ Route::group(['middleware' => ['verified']], function () {
             'XSS',
         ]
     );
+    Route::post('employee/get_employee_id', [EmployeeController::class, 'getEmployeeId'])->name('employee.get_employee_id')->middleware(
+        [
+            'auth',
+            'XSS',
+        ]
+    );
 
     Route::post('branch/employee/json', [EmployeeController::class, 'employeeJson'])->name('branch.employee.json')->middleware(
         [

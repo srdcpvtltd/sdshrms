@@ -1,16 +1,17 @@
-@extends('layouts.admin')
 
-@section('page-title')
-    {{ __('Edit Employee') }}
-@endsection
 
-@section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('employee') }}">{{ __('Employee') }}</a></li>
-    <li class="breadcrumb-item">{{ __('Edit Employee') }}</li>
-@endsection
+<?php $__env->startSection('page-title'); ?>
+    <?php echo e(__('Edit Employee')); ?>
 
-@section('content')
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('breadcrumb'); ?>
+    <li class="breadcrumb-item"><a href="<?php echo e(route('home')); ?>"><?php echo e(__('Home')); ?></a></li>
+    <li class="breadcrumb-item"><a href="<?php echo e(url('employee')); ?>"><?php echo e(__('Employee')); ?></a></li>
+    <li class="breadcrumb-item"><?php echo e(__('Edit Employee')); ?></li>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
 
 <style>
     .cursor-pointer {
@@ -21,92 +22,101 @@
     <div class="">
         <div class="">
 
-            {{ Form::model($employee, ['route' => ['employee.update', $employee->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) }}
+            <?php echo e(Form::model($employee, ['route' => ['employee.update', $employee->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data'])); ?>
+
             <div class="row">
                 <div class="col-md-6 ">
                     <div class="card " style="height: 506px">
                         <div class="card-header">
-                            <h5>{{ __('Personal Detail') }}</h5>
+                            <h5><?php echo e(__('Personal Detail')); ?></h5>
                         </div>
                         <div class="card-body">
 
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    {!! Form::label('name', __('Name'), ['class' => 'form-label']) !!}<span class="text-danger pl-1">*</span>
-                                    {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                    <?php echo Form::label('name', __('Name'), ['class' => 'form-label']); ?><span class="text-danger pl-1">*</span>
+                                    <?php echo Form::text('name', null, ['class' => 'form-control', 'required' => 'required']); ?>
+
                                 </div>
                                 <div class="form-group col-md-6">
-                                    {!! Form::label('phone', __('Phone'), ['class' => 'form-label']) !!}<span class="text-danger pl-1">*</span>
-                                    {!! Form::text('phone', null, ['class' => 'form-control']) !!}
+                                    <?php echo Form::label('phone', __('Phone'), ['class' => 'form-label']); ?><span class="text-danger pl-1">*</span>
+                                    <?php echo Form::text('phone', null, ['class' => 'form-control']); ?>
+
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        {!! Form::label('dob', __('Date of Birth'), ['class' => 'form-label']) !!}<span class="text-danger pl-1">*</span>
-                                        {!! Form::date('dob', null, ['class' => 'form-control ', 'id' => 'data_picker1']) !!}
+                                        <?php echo Form::label('dob', __('Date of Birth'), ['class' => 'form-label']); ?><span class="text-danger pl-1">*</span>
+                                        <?php echo Form::date('dob', null, ['class' => 'form-control ', 'id' => 'data_picker1']); ?>
+
                                     </div>
                                 </div>
                                 <div class="col-md-6 ">
                                     <div class="form-group ">
-                                        {!! Form::label('gender', __('Gender'), ['class' => 'form-label']) !!}<span class="text-danger pl-1">*</span>
+                                        <?php echo Form::label('gender', __('Gender'), ['class' => 'form-label']); ?><span class="text-danger pl-1">*</span>
                                         <div class="d-flex radio-check">
                                             <div class="custom-control custom-radio custom-control-inline">
                                                 <input type="radio" id="g_male" value="Male" name="gender"
                                                     class="form-check-input"
-                                                    {{ $employee->gender == 'Male' ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="g_male">{{ __('Male') }}</label>
+                                                    <?php echo e($employee->gender == 'Male' ? 'checked' : ''); ?>>
+                                                <label class="form-check-label" for="g_male"><?php echo e(__('Male')); ?></label>
                                             </div>
                                             <div class="custom-control custom-radio ms-1 custom-control-inline">
                                                 <input type="radio" id="g_female" value="Female" name="gender"
                                                     class="form-check-input"
-                                                    {{ $employee->gender == 'Female' ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="g_female">{{ __('Female') }}</label>
+                                                    <?php echo e($employee->gender == 'Female' ? 'checked' : ''); ?>>
+                                                <label class="form-check-label" for="g_female"><?php echo e(__('Female')); ?></label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                {!! Form::label('address', __('Address'), ['class' => 'form-label']) !!}<span class="text-danger pl-1">*</span>
-                                {!! Form::textarea('address', null, ['class' => 'form-control', 'rows' => 3]) !!}
+                                <?php echo Form::label('address', __('Address'), ['class' => 'form-label']); ?><span class="text-danger pl-1">*</span>
+                                <?php echo Form::textarea('address', null, ['class' => 'form-control', 'rows' => 3]); ?>
+
                             </div>
-                            @if (\Auth::user()->type == 'employee')
+                            <?php if(\Auth::user()->type == 'employee'): ?>
                                 <div class="float-end">
-                                    {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
+                                    <?php echo Form::submit('Update', ['class' => 'btn btn-primary']); ?>
+
                                 </div>
-                            @endif
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
-                @if (\Auth::user()->type != 'employee')
+                <?php if(\Auth::user()->type != 'employee'): ?>
                     <div class="col-md-6 ">
                         <div class="card " style="height: 506px">
                             <div class="card-header">
-                                <h5>{{ __('Company Detail') }}</h5>
+                                <h5><?php echo e(__('Company Detail')); ?></h5>
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    @csrf
+                                    <?php echo csrf_field(); ?>
                                     <div class="form-group">
-                                        {!! Form::label('employee_id', __('Employee ID'), ['class' => 'form-label']) !!}
-                                        {!! Form::text('employee_id', $employeesId, ['class' => 'form-control', 'disabled' => 'disabled','id' => 'employee_id']) !!}
+                                        <?php echo Form::label('employee_id', __('Employee ID'), ['class' => 'form-label']); ?>
+
+                                        <?php echo Form::text('employee_id', $employeesId, ['class' => 'form-control', 'disabled' => 'disabled','id' => 'employee_id']); ?>
+
                                     </div>
                                     <div class="form-group col-md-6">
-                                        {{ Form::label('branch_id', __('Branch'), ['class' => 'form-label']) }}
-                                        {{ Form::select('branch_id', $branches, null, ['class' => 'form-control ', 'required' => 'required', 'placeholder' => 'Select Branch']) }}
+                                        <?php echo e(Form::label('branch_id', __('Branch'), ['class' => 'form-label'])); ?>
+
+                                        <?php echo e(Form::select('branch_id', $branches, null, ['class' => 'form-control ', 'required' => 'required', 'placeholder' => 'Select Branch'])); ?>
+
                                     </div>
                                     <div class="form-group col-md-6">
-                                        {{ Form::label('department_id', __('Select Department*'), ['class' => 'form-label']) }}
+                                        <?php echo e(Form::label('department_id', __('Select Department*'), ['class' => 'form-label'])); ?>
+
                                         <div class="department_div">
-                                            {{ Form::select('department_id', $departments, null, ['class' => 'form-control department_id', 'id' => 'department_id', 'required' => 'required', 'id' => 'department_id']) }}
+                                            <?php echo e(Form::select('department_id', $departments, null, ['class' => 'form-control department_id', 'id' => 'department_id', 'required' => 'required', 'id' => 'department_id'])); ?>
+
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        {{ Form::label('designation_id', __('Designation'), ['class' => 'form-label']) }}
-                                        {{-- <select class=" form-control select2-multiple" id="designation_id"
-                                            name="designation_id" data-toggle=""
-                                            data-placeholder="{{ __('Select Designation ...') }}">
-                                            <option value="">{{ __('Select any Designation') }}</option>
-                                        </select> --}}
+                                        <?php echo e(Form::label('designation_id', __('Designation'), ['class' => 'form-label'])); ?>
+
+                                        
 
 
                                         <div class="form-icon-user">
@@ -118,48 +128,50 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        {!! Form::label('company_doj', 'Company Date Of Joining', ['class' => 'form-label']) !!}
-                                        {!! Form::date('company_doj', null, [
+                                        <?php echo Form::label('company_doj', 'Company Date Of Joining', ['class' => 'form-label']); ?>
+
+                                        <?php echo Form::date('company_doj', null, [
                                             'class' => 'form-control ',
                                             'id' => 'data_picker2',
                                             'required' => 'required',
-                                        ]) !!}
+                                        ]); ?>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                @else
+                <?php else: ?>
                     <div class="col-md-6 ">
                         <div class="employee-detail-wrap ">
                             <div class="card " style="height: 506px">
                                 <div class="card-header">
-                                    <h5>{{ __('Company Detail') }}</h5>
+                                    <h5><?php echo e(__('Company Detail')); ?></h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="info">
-                                                <strong>{{ __('Branch') }}</strong>
-                                                <span>{{ !empty($employee->branch) ? $employee->branch->name : '' }}</span>
+                                                <strong><?php echo e(__('Branch')); ?></strong>
+                                                <span><?php echo e(!empty($employee->branch) ? $employee->branch->name : ''); ?></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="info font-style">
-                                                <strong>{{ __('Department') }}</strong>
-                                                <span>{{ !empty($employee->department) ? $employee->department->name : '' }}</span>
+                                                <strong><?php echo e(__('Department')); ?></strong>
+                                                <span><?php echo e(!empty($employee->department) ? $employee->department->name : ''); ?></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="info font-style">
-                                                <strong>{{ __('Designation') }}</strong>
-                                                <span>{{ !empty($employee->designation) ? $employee->designation->name : '' }}</span>
+                                                <strong><?php echo e(__('Designation')); ?></strong>
+                                                <span><?php echo e(!empty($employee->designation) ? $employee->designation->name : ''); ?></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="info">
-                                                <strong>{{ __('Date Of Joining') }}</strong>
-                                                <span>{{ \Auth::user()->dateFormat($employee->company_doj) }}</span>
+                                                <strong><?php echo e(__('Date Of Joining')); ?></strong>
+                                                <span><?php echo e(\Auth::user()->dateFormat($employee->company_doj)); ?></span>
                                             </div>
                                         </div>
                                     </div>
@@ -167,138 +179,159 @@
                             </div>
                         </div>
                     </div>
-                @endif
+                <?php endif; ?>
             </div>
-            @if (\Auth::user()->type != 'employee')
+            <?php if(\Auth::user()->type != 'employee'): ?>
                 <div class="row">
                     <div class="col-md-6 ">
                         <div class="card em-card">
-                            {{-- <div class="card " style="height: 506px"> --}}
+                            
                             <div class="card-header">
-                                <h5>{{ __('Document') }}</h5>
+                                <h5><?php echo e(__('Document')); ?></h5>
                             </div>
                             <div class="card-body">
-                                @php
+                                <?php
                                     $employeedoc = $employee->documents()->pluck('document_value', __('document_id'));
-                                @endphp
+                                ?>
 
-                                @foreach ($documents as $key => $document)
+                                <?php $__currentLoopData = $documents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $document): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="row">
                                         <div class="form-group col-12 d-flex">
                                             <div class="float-left col-4">
-                                                <label for="document" class=" form-label">{{ $document->name }}
-                                                    @if ($document->is_required == 1)
+                                                <label for="document" class=" form-label"><?php echo e($document->name); ?>
+
+                                                    <?php if($document->is_required == 1): ?>
                                                         <span class="text-danger">*</span>
-                                                    @endif
+                                                    <?php endif; ?>
                                                 </label>
                                             </div>
                                             <div class="float-right col-8">
-                                                <input type="hidden" name="emp_doc_id[{{ $document->id }}]" id=""
-                                                    value="{{ $document->id }}">
+                                                <input type="hidden" name="emp_doc_id[<?php echo e($document->id); ?>]" id=""
+                                                    value="<?php echo e($document->id); ?>">
 
-                                                @php
+                                                <?php
                                                     $employeedoc = !empty($employee->documents) ? $employee->documents()->pluck('document_value', __('document_id')) : [];
                                                     $logo = \App\Models\Utility::get_file('uploads/document');
                                                     
-                                                @endphp
+                                                ?>
                                                 <div class="choose-files ">
-                                                    <label for="document[{{ $document->id }}]">
+                                                    <label for="document[<?php echo e($document->id); ?>]">
                                                         <div class=" bg-primary document cursor-pointer"> <i
-                                                                class="ti ti-upload px-1"></i>{{ __('Choose file here') }}
+                                                                class="ti ti-upload px-1"></i><?php echo e(__('Choose file here')); ?>
+
                                                         </div>
                                                         <input type="file"
-                                                            class="form-control file  d-none @error('document') is-invalid @enderror"
-                                                            @if ($document->is_required == 1)  @endif
-                                                            name="document[{{ $document->id }}]"
-                                                            id="document[{{ $document->id }}]"
-                                                            data-filename="{{ $document->id . '_filename' }}"
-                                                            onchange="document.getElementById('{{ 'blah' . $key }}').src = window.URL.createObjectURL(this.files[0])">
+                                                            class="form-control file  d-none <?php $__errorArgs = ['document'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                                                            <?php if($document->is_required == 1): ?>  <?php endif; ?>
+                                                            name="document[<?php echo e($document->id); ?>]"
+                                                            id="document[<?php echo e($document->id); ?>]"
+                                                            data-filename="<?php echo e($document->id . '_filename'); ?>"
+                                                            onchange="document.getElementById('<?php echo e('blah' . $key); ?>').src = window.URL.createObjectURL(this.files[0])">
                                                     </label>
-                                                    {{-- <a href="#"><p class="{{ $document->id . '_filename' }} "></p></a> --}}
-                                                    <img id="{{ 'blah' . $key }}"
-                                                        src="{{ isset($employeedoc[$document->id]) && !empty($employeedoc[$document->id]) ? $logo . '/' . $employeedoc[$document->id] : asset(Storage::url("uploads/avatar/defualt.png")) }}"
+                                                    
+                                                    <img id="<?php echo e('blah' . $key); ?>"
+                                                        src="<?php echo e(isset($employeedoc[$document->id]) && !empty($employeedoc[$document->id]) ? $logo . '/' . $employeedoc[$document->id] : asset(Storage::url("uploads/avatar/defualt.png"))); ?>"
                                                         width="50%" />
 
                                                 </div>
 
-                                                @if (!empty($employeedoc[$document->id]))
+                                                <?php if(!empty($employeedoc[$document->id])): ?>
                                                     <span class="text-xs"><a
-                                                            href="{{ !empty($employeedoc[$document->id]) ? $logo . '/' . $employeedoc[$document->id] : '' }}"
+                                                            href="<?php echo e(!empty($employeedoc[$document->id]) ? $logo . '/' . $employeedoc[$document->id] : ''); ?>"
                                                             target="_blank">
-                                                            {{-- {{ !empty($employeedoc[$document->id]) ? $employeedoc[$document->id] : '' }} --}}
+                                                            
                                                         </a>
                                                     </span>
-                                                @endif
+                                                <?php endif; ?>
                                             </div>
 
                                         </div>
                                     </div>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
                         </div>
                     </div>
-                    {{-- </div> --}}
+                    
                     <div class="col-md-6">
                         <div class="card " style="height: 506px">
                             <div class="card-header">
-                                <h5>{{ __('Bank Account Detail') }}</h5>
+                                <h5><?php echo e(__('Bank Account Detail')); ?></h5>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-6">
-                                        {!! Form::label('account_holder_name', __('Account Holder Name'), ['class' => 'form-label']) !!}
-                                        {!! Form::text('account_holder_name', null, ['class' => 'form-control']) !!}
+                                        <?php echo Form::label('account_holder_name', __('Account Holder Name'), ['class' => 'form-label']); ?>
+
+                                        <?php echo Form::text('account_holder_name', null, ['class' => 'form-control']); ?>
+
 
                                     </div>
                                     <div class="form-group col-md-6">
-                                        {!! Form::label('account_number', __('Account Number'), ['class' => 'form-label']) !!}
-                                        {!! Form::number('account_number', null, ['class' => 'form-control']) !!}
+                                        <?php echo Form::label('account_number', __('Account Number'), ['class' => 'form-label']); ?>
+
+                                        <?php echo Form::number('account_number', null, ['class' => 'form-control']); ?>
+
 
                                     </div>
                                     <div class="form-group col-md-6">
-                                        {!! Form::label('bank_name', __('Bank Name'), ['class' => 'form-label']) !!}
-                                        {!! Form::text('bank_name', null, ['class' => 'form-control']) !!}
+                                        <?php echo Form::label('bank_name', __('Bank Name'), ['class' => 'form-label']); ?>
+
+                                        <?php echo Form::text('bank_name', null, ['class' => 'form-control']); ?>
+
 
                                     </div>
                                     <div class="form-group col-md-6">
-                                        {!! Form::label('bank_identifier_code', __('Bank Identifier Code'), ['class' => 'form-label']) !!}
-                                        {!! Form::text('bank_identifier_code', null, ['class' => 'form-control']) !!}
+                                        <?php echo Form::label('bank_identifier_code', __('Bank Identifier Code'), ['class' => 'form-label']); ?>
+
+                                        <?php echo Form::text('bank_identifier_code', null, ['class' => 'form-control']); ?>
+
                                     </div>
                                     <div class="form-group col-md-6">
-                                        {!! Form::label('branch_location', __('Branch Location'), ['class' => 'form-label']) !!}
-                                        {!! Form::text('branch_location', null, ['class' => 'form-control']) !!}
+                                        <?php echo Form::label('branch_location', __('Branch Location'), ['class' => 'form-label']); ?>
+
+                                        <?php echo Form::text('branch_location', null, ['class' => 'form-control']); ?>
+
                                     </div>
                                     <div class="form-group col-md-6">
-                                        {!! Form::label('tax_payer_id', __('Tax Payer Id'), ['class' => 'form-label']) !!}
-                                        {!! Form::text('tax_payer_id', null, ['class' => 'form-control']) !!}
+                                        <?php echo Form::label('tax_payer_id', __('Tax Payer Id'), ['class' => 'form-label']); ?>
+
+                                        <?php echo Form::text('tax_payer_id', null, ['class' => 'form-control']); ?>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            @else
+            <?php else: ?>
                 <div class="row">
                     <div class="col-md-6 ">
                         <div class="employee-detail-wrap">
                             <div class="card " style="height: 506px">
                                 <div class="card-header">
-                                    <h5>{{ __('Document Detail') }}</h5>
+                                    <h5><?php echo e(__('Document Detail')); ?></h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        @php
+                                        <?php
                                             $employeedoc = $employee->documents()->pluck('document_value', __('document_id'));
-                                        @endphp
-                                        @foreach ($documents as $key => $document)
+                                        ?>
+                                        <?php $__currentLoopData = $documents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $document): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <div class="col-md-12">
                                                 <div class="info">
-                                                    <strong>{{ $document->name }}</strong>
-                                                    <span><a href="{{ !empty($employeedoc[$document->id]) ? asset(Storage::url('uploads/document')) . '/' . $employeedoc[$document->id] : '' }}"
-                                                            target="_blank">{{ !empty($employeedoc[$document->id]) ? $employeedoc[$document->id] : '' }}</a></span>
+                                                    <strong><?php echo e($document->name); ?></strong>
+                                                    <span><a href="<?php echo e(!empty($employeedoc[$document->id]) ? asset(Storage::url('uploads/document')) . '/' . $employeedoc[$document->id] : ''); ?>"
+                                                            target="_blank"><?php echo e(!empty($employeedoc[$document->id]) ? $employeedoc[$document->id] : ''); ?></a></span>
                                                 </div>
                                             </div>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </div>
                                 </div>
                             </div>
@@ -308,44 +341,44 @@
                         <div class="employee-detail-wrap">
                             <div class="card " style="height: 506px">
                                 <div class="card-header">
-                                    <h5>{{ __('Bank Account Detail') }}</h5>
+                                    <h5><?php echo e(__('Bank Account Detail')); ?></h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="info">
-                                                <strong>{{ __('Account Holder Name') }}</strong>
-                                                <span>{{ $employee->account_holder_name }}</span>
+                                                <strong><?php echo e(__('Account Holder Name')); ?></strong>
+                                                <span><?php echo e($employee->account_holder_name); ?></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="info font-style">
-                                                <strong>{{ __('Account Number') }}</strong>
-                                                <span>{{ $employee->account_number }}</span>
+                                                <strong><?php echo e(__('Account Number')); ?></strong>
+                                                <span><?php echo e($employee->account_number); ?></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="info font-style">
-                                                <strong>{{ __('Bank Name') }}</strong>
-                                                <span>{{ $employee->bank_name }}</span>
+                                                <strong><?php echo e(__('Bank Name')); ?></strong>
+                                                <span><?php echo e($employee->bank_name); ?></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="info">
-                                                <strong>{{ __('Bank Identifier Code') }}</strong>
-                                                <span>{{ $employee->bank_identifier_code }}</span>
+                                                <strong><?php echo e(__('Bank Identifier Code')); ?></strong>
+                                                <span><?php echo e($employee->bank_identifier_code); ?></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="info">
-                                                <strong>{{ __('Branch Location') }}</strong>
-                                                <span>{{ $employee->branch_location }}</span>
+                                                <strong><?php echo e(__('Branch Location')); ?></strong>
+                                                <span><?php echo e($employee->branch_location); ?></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="info">
-                                                <strong>{{ __('Tax Payer Id') }}</strong>
-                                                <span>{{ $employee->tax_payer_id }}</span>
+                                                <strong><?php echo e(__('Tax Payer Id')); ?></strong>
+                                                <span><?php echo e($employee->tax_payer_id); ?></span>
                                             </div>
                                         </div>
 
@@ -355,20 +388,22 @@
                         </div>
                     </div>
                 </div>
-            @endif
+            <?php endif; ?>
             <div class="row">
                 
                     <div class="col-md-6 ">
                         <div class="card em-card " style="height: 506px">
                             <div class="card-header">
-                                <h5>{{ __('Reporting Manager') }}</h5>
+                                <h5><?php echo e(__('Reporting Manager')); ?></h5>
                             </div>
                             <div class="card-body employee-detail-create-body">
                                 <div class="row">
                                     <div class="form-group col-md-6">
-                                        {{ Form::label('reporting_manager_id', __('Select Reporting Manager*'), ['class' => 'form-label']) }}
+                                        <?php echo e(Form::label('reporting_manager_id', __('Select Reporting Manager*'), ['class' => 'form-label'])); ?>
+
                                         <div class="form-icon-user">
-                                            {{ Form::select('reporting_manager_id', $reportingManagers, $reportingManagerId, ['class' => 'form-control reporting_manager_id', 'required' => 'required', 'placeholder' => 'Select Reporting Manager', 'id' => 'reporting_manager_id']) }}
+                                            <?php echo e(Form::select('reporting_manager_id', $reportingManagers, $reportingManagerId, ['class' => 'form-control reporting_manager_id', 'required' => 'required', 'placeholder' => 'Select Reporting Manager', 'id' => 'reporting_manager_id'])); ?>
+
                                         </div>
                                     </div>
                                 </div>
@@ -377,29 +412,30 @@
                     </div>
             </div>
 
-            @if (\Auth::user()->type != 'employee')
+            <?php if(\Auth::user()->type != 'employee'): ?>
                 <div class="float-end">
-                    <button type="submit" class="btn  btn-primary">{{ 'Update' }}</button>
+                    <button type="submit" class="btn  btn-primary"><?php echo e('Update'); ?></button>
                 </div>
-            @endif
+            <?php endif; ?>
             <div class="col-12">
-                {!! Form::close() !!}
+                <?php echo Form::close(); ?>
+
             </div>
         </div>
     </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('script-page')
+<?php $__env->startPush('script-page'); ?>
     <script type="text/javascript">
         function getDesignation(did) {
 
             $.ajax({
-                url: '{{ route('employee.json') }}',
+                url: '<?php echo e(route('employee.json')); ?>',
                 type: 'POST',
                 data: {
                     "department_id": did,
-                    "_token": "{{ csrf_token() }}",
+                    "_token": "<?php echo e(csrf_token()); ?>",
                 },
                 success: function(data) {
                     $('.designation_id').empty();
@@ -413,7 +449,7 @@
                     $('.designation_id').append('<option value="">Select any Designation</option>');
                     $.each(data, function(key, value) {
                         var select = '';
-                        if (key == '{{ $employee->designation_id }}') {
+                        if (key == '<?php echo e($employee->designation_id); ?>') {
                             select = 'selected';
                         }
 
@@ -430,11 +466,11 @@
         function getdepartment(bid) {
 
             $.ajax({
-                url: '{{ route('employee.getdepartment') }}',
+                url: '<?php echo e(route('employee.getdepartment')); ?>',
                 type: 'POST',
                 data: {
                     "branch_id": bid,
-                    "_token": "{{ csrf_token() }}",
+                    "_token": "<?php echo e(csrf_token()); ?>",
                 },
                 success: function(data) {
                     $('#department_id').empty();
@@ -448,7 +484,7 @@
                     $('.department_id').append('<option value="">Select any Department</option>');
                     $.each(data, function(key, value) {
                         var select = '';
-                        if (key == '{{ $employee->department_id }}') {
+                        if (key == '<?php echo e($employee->department_id); ?>') {
                             select = 'selected';
                         }
 
@@ -464,7 +500,7 @@
 
         $(document).ready(function() {
             var d_id = $('#department_id').val();
-            var designation_id = '{{ $employee->designation_id }}';
+            var designation_id = '<?php echo e($employee->designation_id); ?>';
             getDesignation(d_id);
         });
 
@@ -475,7 +511,7 @@
 
         $(document).ready(function() {
             var b_id = $('#branch_id').val();
-            var department_id = '{{ $employee->department_id }}';
+            var department_id = '<?php echo e($employee->department_id); ?>';
             getdepartment(b_id);
         });
 
@@ -492,11 +528,11 @@
         function getEmployeeID(gender) {
 
             $.ajax({
-                url: '{{ route('employee.get_employee_id') }}',
+                url: '<?php echo e(route('employee.get_employee_id')); ?>',
                 type: 'POST',
                 data: {
                     "gender": gender,
-                    "_token": "{{ csrf_token() }}",
+                    "_token": "<?php echo e(csrf_token()); ?>",
                 },
                 success: function(employee_id) {
                     $('#employee_id').val(employee_id);
@@ -504,4 +540,6 @@
             });
         }
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\php\upwork\debendra\sdshrms\resources\views/employee/edit.blade.php ENDPATH**/ ?>

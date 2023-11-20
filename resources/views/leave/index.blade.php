@@ -40,9 +40,9 @@
                     <table class="table" id="pc-dt-simple">
                         <thead>
                             <tr>
-                                @if (\Auth::user()->type != 'employee')
+                                {{-- @if (\Auth::user()->type != 'employee') --}}
                                     <th>{{ __('Employee') }}</th>
-                                @endif
+                                {{-- @endif --}}
                                 <th>{{ __('Leave Type') }}</th>
                                 <th>{{ __('Applied On') }}</th>
                                 <th>{{ __('Start Date') }}</th>
@@ -56,10 +56,10 @@
                         <tbody>
                             @foreach ($leaves as $leave)
                                 <tr>
-                                    @if (\Auth::user()->type != 'employee')
+                                    {{-- @if (\Auth::user()->type != 'employee') --}}
                                         <td>{{ !empty(\Auth::user()->getEmployee($leave->employee_id)) ? \Auth::user()->getEmployee($leave->employee_id)->name : '' }}
                                         </td>
-                                    @endif
+                                    {{-- @endif --}}
                                     <td>{{ !empty(\Auth::user()->getLeaveType($leave->leave_type_id)) ? \Auth::user()->getLeaveType($leave->leave_type_id)->title : '' }}
                                     </td>
                                     <td>{{ \Auth::user()->dateFormat($leave->applied_on) }}</td>
@@ -179,7 +179,6 @@
                                                             data-bs-original-title="{{ __('Manage Leave') }}">
                                                             <i class="ti ti-caret-right text-white"></i>
                                                         </a>
-                                                    </div>
                                                 @endif
                                         </span>
                                     </td>

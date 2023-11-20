@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Models\Leave as LocalLeave;
 use App\Models\LeaveType;
 use App\Mail\LeaveActionSend;
+use App\Models\ReportingManager;
 use App\Models\Utility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,8 @@ class LeaveController extends Controller
             if (\Auth::user()->type == 'employee') {
                 $user     = \Auth::user();
                 $employee = Employee::where('user_id', '=', $user->id)->first();
-                $leaves   = LocalLeave::where('employee_id', '=', $employee->id)->get();
+                $reportingUserIds = ReportingManager::where('reporting_manager_id',$user->id)->get()->pluck('reporting_user_id')->toArray();
+                $leaves   = LocalLeave::where('employee_id', '=', $employee->id)->orWhereIn('employee_id',$reportingUserIds)->get();
             } else {
                 $leaves = LocalLeave::where('created_by', '=', \Auth::user()->creatorId())->get();
             }

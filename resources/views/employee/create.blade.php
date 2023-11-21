@@ -314,7 +314,7 @@
         });
         $('input[type=radio][name="gender"]').on('change', function(event) {
             var gender = $(this).val();
-            getEmployeeID(gender);
+            // getEmployeeID(gender);
         });
 
         function getEmployeeID(gender) {

@@ -486,16 +486,18 @@
         
         $('input[type=radio][name="gender"]').on('change', function(event) {
             var gender = $(this).val();
+            var employee_id = "{{@$employee->employee_id}}";
             getEmployeeID(gender);
         });
 
-        function getEmployeeID(gender) {
+        function getEmployeeID(gender,employee_id) {
 
             $.ajax({
                 url: '{{ route('employee.get_employee_id') }}',
                 type: 'POST',
                 data: {
                     "gender": gender,
+                    "employee_id": employee_id,
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(employee_id) {

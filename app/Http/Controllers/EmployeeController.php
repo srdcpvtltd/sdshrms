@@ -67,7 +67,8 @@ class EmployeeController extends Controller
             $employees        = User::where('created_by', \Auth::user()->creatorId())->get();
             $reportingManagers        = User::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
 
-            $employeesId      = \Auth::user()->employeeIdFormat($this->employeeNumber());
+            // $employeesId      = \Auth::user()->employeeIdFormat($this->employeeNumber());
+            $employeesId      = $this->employeeNumber();
 
             return view('employee.create', compact('employees', 'employeesId', 'departments', 'designations', 'documents', 'branches', 'company_settings','reportingManagers'));
         } else {
@@ -88,6 +89,7 @@ class EmployeeController extends Controller
                     'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9',
                     'address' => 'required',
                     'email' => 'required|unique:users',
+                    'employee_id' => 'required|unique:employees',
                     'password' => 'required',
                     'department_id' => 'required',
                     'designation_id' => 'required',
@@ -154,7 +156,8 @@ class EmployeeController extends Controller
                     'address' => $request['address'],
                     'email' => $request['email'],
                     'password' => Hash::make($request['password']),
-                    'employee_id' => $this->employeeNumber(),
+                    // 'employee_id' => $this->employeeNumber(),
+                    'employee_id' => $request['employee_id'],
                     'branch_id' => $request['branch_id'],
                     'department_id' => $request['department_id'],
                     'designation_id' => $request['designation_id'],
@@ -840,7 +843,12 @@ class EmployeeController extends Controller
     public function getEmployeeId(Request $request)
     {
         $settings = Utility::settings();
-        $employeeId = $settings["employee_prefix"] .'/'.$request->gender.'/'. sprintf("%05d", $this->employeeNumber());
+        if($request->employee_id)
+        {
+            $employeeId = $settings["employee_prefix"] .'/'.$request->gender.'/'. sprintf("%05d", $request->employee_id);
+        }else{
+            $employeeId = $settings["employee_prefix"] .'/'.$request->gender.'/'. sprintf("%05d", $this->employeeNumber());
+        }
         return response()->json($employeeId);
     }
 }
